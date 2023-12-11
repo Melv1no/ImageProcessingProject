@@ -1,0 +1,27 @@
+# ninja log v5
+104	193	7240324853056881	ImageProcessingExam.exe	d406c5dd765d569c
+0	43	7240342870048177	CMakeFiles/image_processing.dir/src/image.c.obj	1fdc48832003ccdb
+4	46	7240342870078178	CMakeFiles/image_processing.dir/src/transformations.c.obj	51a5b88535dea9ab
+8	49	7240342870118200	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
+12	54	7240342870158274	CMakeFiles/image_processing.dir/src/bonus.c.obj	fd0edcaa23fb6bd
+2	69	7240342870318695	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
+10	75	7240342870379233	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+6	77	7240342870399253	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+77	1577	7240342871119414	image_processing.exe	1cbad27dc9027f53
+3	63	7240344255426820	CMakeFiles/image_processing.dir/src/image.c.obj	1fdc48832003ccdb
+5	69	7240344255486927	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+2	55	7240344762560072	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
+5	55	7240344762550142	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+55	1538	7240344763251483	image_processing.exe	1cbad27dc9027f53
+2	54	7240347293319236	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
+54	1577	7240347293989933	image_processing.exe	1cbad27dc9027f53
+2	65	7240348465602723	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+65	1561	7240348466272872	image_processing.exe	1cbad27dc9027f53
+2	67	7240349341172860	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+68	1591	7240349341884764	image_processing.exe	1cbad27dc9027f53
+2	56	7240351462697700	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
+7	60	7240351462737624	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+4	67	7240351462807741	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+2	61	7240351861024257	CMakeFiles/image_processing.dir/src/transformations.c.obj	51a5b88535dea9ab
+4	68	7240353029602501	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+2	56	7240353619911636	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
