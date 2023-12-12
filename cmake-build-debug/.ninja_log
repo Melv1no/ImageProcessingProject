@@ -54,3 +54,5 @@
 5	46	7241006580061796	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
 3	55	7241006580151816	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
 55	1299	7241006580701938	image_processing.exe	1cbad27dc9027f53
+2	45	7241008459831536	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
+45	1276	7241008460381662	image_processing.exe	1cbad27dc9027f53
