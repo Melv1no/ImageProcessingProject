@@ -7,7 +7,6 @@ extern int imageHeight;
 extern unsigned char* imageData;
 
 // Function declarations for menu options
-void applyTransformation();
 void applyEffect();
 void saveImage();
 

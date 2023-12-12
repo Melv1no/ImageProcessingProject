@@ -31,10 +31,9 @@ int main() {
     do {
         // Display the menu
         printf("\nImage Processing Menu:\n");
-        printf("1. Apply Transformation\n");
-        printf("2. Apply Effect\n");
-        printf("3. Save Image\n");
-        printf("4. Exit\n");
+        printf("1. Apply Effect\n");
+        printf("2. Save Image\n");
+        printf("3. Exit\n");
 
         // Get user choice
         printf("Enter your choice: ");
@@ -43,18 +42,14 @@ int main() {
         // Process user choice
         switch (choice) {
             case 1:
-                // Call function to handle transformation
-                    applyTransformation();
-            break;
-            case 2:
                 // Call function to handle effect
                     applyEffect();
             break;
-            case 3:
+            case 2:
                 // Call function to save image
                     saveImage();
             break;
-            case 4:
+            case 3:
                 printf("Exiting...\n");
             break;
             default:

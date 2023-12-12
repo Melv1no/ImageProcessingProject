@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,7 +6,7 @@
 #include "image.h"
 
 // Global variable to store the loaded image
-PGMImage* loadedImage = NULL;
+
 
 int loadImage(const char* filename) {
     FILE* file = fopen(filename, "rb");
@@ -40,15 +41,20 @@ int loadImage(const char* filename) {
 }
 
 
-void saveImage(const char* outputFilename) {
+
+void saveModifiedImage(const char* outputFilename) {
     // Check if an image is loaded
     if (loadedImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
         return;
     }
 
+    // Construct the full path for the output file in the "output" folder
+    char outputPath[100];  // Adjust the size based on your needs
+    snprintf(outputPath, sizeof(outputPath), "output/%s", outputFilename);
+
     // Open the output file for writing
-    FILE* file = fopen(outputFilename, "wb");
+    FILE* file = fopen(outputPath, "wb");
 
     if (file == NULL) {
         fprintf(stderr, "Error: Unable to open file for writing.\n");
@@ -62,7 +68,7 @@ void saveImage(const char* outputFilename) {
     fwrite(loadedImage->data, sizeof(unsigned char), loadedImage->width * loadedImage->height, file);
 
     fclose(file);
-    printf("Image saved successfully to %s.\n", outputFilename);
+    printf("Image saved successfully to %s.\n", outputPath);
 }
 void cleanupImage() {
     // Free the loaded image data

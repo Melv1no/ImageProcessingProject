@@ -5,7 +5,6 @@
 #include "image.h"  // Include the image header file
 
 // Definition of loadedImage
-PGMImage* loadedImage = NULL;
 
 void mirrorImage() {
     // Check if an image is loaded
