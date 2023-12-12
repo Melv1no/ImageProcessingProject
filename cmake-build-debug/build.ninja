@@ -84,13 +84,6 @@ build CMakeFiles/image_processing.dir/src/menu.c.obj: C_COMPILER__image_processi
   OBJECT_DIR = CMakeFiles\image_processing.dir
   OBJECT_FILE_DIR = CMakeFiles\image_processing.dir\src
 
-build CMakeFiles/image_processing.dir/src/bonus.c.obj: C_COMPILER__image_processing_unscanned_Debug C$:/Users/Melvin$ OLIVET/CLionProjects/ImageProcessingProject/src/bonus.c || cmake_object_order_depends_target_image_processing
-  DEP_FILE = CMakeFiles\image_processing.dir\src\bonus.c.obj.d
-  FLAGS = -g -std=c11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject/include"
-  OBJECT_DIR = CMakeFiles\image_processing.dir
-  OBJECT_FILE_DIR = CMakeFiles\image_processing.dir\src
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target image_processing
@@ -99,7 +92,7 @@ build CMakeFiles/image_processing.dir/src/bonus.c.obj: C_COMPILER__image_process
 #############################################
 # Link the executable image_processing.exe
 
-build image_processing.exe: C_EXECUTABLE_LINKER__image_processing_Debug CMakeFiles/image_processing.dir/src/main.c.obj CMakeFiles/image_processing.dir/src/image.c.obj CMakeFiles/image_processing.dir/src/effects.c.obj CMakeFiles/image_processing.dir/src/file_io.c.obj CMakeFiles/image_processing.dir/src/menu.c.obj CMakeFiles/image_processing.dir/src/bonus.c.obj
+build image_processing.exe: C_EXECUTABLE_LINKER__image_processing_Debug CMakeFiles/image_processing.dir/src/main.c.obj CMakeFiles/image_processing.dir/src/image.c.obj CMakeFiles/image_processing.dir/src/effects.c.obj CMakeFiles/image_processing.dir/src/file_io.c.obj CMakeFiles/image_processing.dir/src/menu.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\image_processing.dir

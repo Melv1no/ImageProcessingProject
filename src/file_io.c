@@ -7,13 +7,14 @@
 
 PGMImage* loadedPGMImage = NULL;
 PPMImage* loadedPPMImage = NULL;
-
+int isPGMImageLoaded = 0;
+int isPPMImageLoaded = 0;
 // Implement other functions...
 
 
 int loadPGMImage(const char* filename) {
     FILE* file = fopen(filename, "rb");
-
+    isPGMImageLoaded = 1;
     if (file == NULL) {
         fprintf(stderr, "Error: Unable to open file '%s' for reading or file does not exist.\n", filename);
         return 1;
@@ -44,7 +45,8 @@ int loadPGMImage(const char* filename) {
 }
 
 int loadPPMImage(const char* filename) {
-    // Implementation for loading PPM image
+    FILE* file = fopen(filename, "rb");
+    isPPMImageLoaded = 1;
     // ...
 }
 

@@ -8,7 +8,8 @@
 // External variables for loaded images
 extern PGMImage* loadedPGMImage;
 extern PPMImage* loadedPPMImage;
-
+extern int isPGMImageLoaded;
+extern int isPPMImageLoaded;
 int loadPGMImage(const char* filename);
 int loadPPMImage(const char* filename);
 void savePGMImage(const char* outputFilename);

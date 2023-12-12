@@ -5,23 +5,14 @@
 #include "file_io.h"
 #include "image.h"
 
-// Definition of image variables
-int imageWidth;
-int imageHeight;
-unsigned char* imageData;
-
-// Definition of loadedImage
-
 
 int main() {
     int choice;
-    char filename[100];  // Adjust the size based on your needs
+    char filename[100];
 
-    // Load an image before entering the menu
     printf("Enter the filename of the image to load: ");
     scanf("%s", filename);
 
-    // Determine the image type based on the file extension
     char* extension = strrchr(filename, '.');
     if (extension != NULL) {
         if (strcmp(extension, ".pgm") == 0) {
@@ -46,26 +37,22 @@ int main() {
         printf("Invalid filename. Exiting.\n");
         return 1;
     }
+
     do {
-        // Display the menu
         printf("\nImage Processing Menu:\n");
         printf("1. Apply Effect\n");
         printf("2. Save Image\n");
         printf("3. Exit\n");
 
-        // Get user choice
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        // Process user choice
         switch (choice) {
             case 1:
-                // Call function to handle effect
-                    applyEffect();
+                applyEffect();
             break;
             case 2:
-                // Call function to save image
-                    saveImage();
+                saveImage();
             break;
             case 3:
                 printf("Exiting...\n");

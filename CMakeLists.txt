@@ -9,7 +9,6 @@ set(SOURCES
         src/effects.c
         src/file_io.c
         src/menu.c
-        src/bonus.c
 )
 
 # Add your header files
@@ -18,7 +17,6 @@ set(HEADERS
         include/effects.h
         include/file_io.h
         include/menu.h
-        include/bonus.h
 )
 
 # Set the include directories
