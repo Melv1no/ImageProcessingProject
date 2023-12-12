@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "menu.h"
 #include "file_io.h"
 #include "image.h"
-#include "transformations.h"
 
 // Definition of image variables
 int imageWidth;
@@ -10,7 +11,7 @@ int imageHeight;
 unsigned char* imageData;
 
 // Definition of loadedImage
-PGMImage* loadedImage = NULL;
+
 
 int main() {
     int choice;
@@ -20,14 +21,31 @@ int main() {
     printf("Enter the filename of the image to load: ");
     scanf("%s", filename);
 
-    // Load the image (implement load function in file_io.c)
-    if (loadImage(filename) == 0) {
-        printf("Image loaded successfully.\n");
+    // Determine the image type based on the file extension
+    char* extension = strrchr(filename, '.');
+    if (extension != NULL) {
+        if (strcmp(extension, ".pgm") == 0) {
+            if (loadPGMImage(filename) == 0) {
+                printf("PGM Image loaded successfully.\n");
+            } else {
+                printf("Failed to load the PGM image. Exiting.\n");
+                return 1;
+            }
+        } else if (strcmp(extension, ".ppm") == 0) {
+            if (loadPPMImage(filename) == 0) {
+                printf("PPM Image loaded successfully.\n");
+            } else {
+                printf("Failed to load the PPM image. Exiting.\n");
+                return 1;
+            }
+        } else {
+            printf("Unsupported file format. Exiting.\n");
+            return 1;
+        }
     } else {
-        printf("Failed to load the image. Exiting.\n");
-        return 1;  // Exit the program if loading fails
+        printf("Invalid filename. Exiting.\n");
+        return 1;
     }
-
     do {
         // Display the menu
         printf("\nImage Processing Menu:\n");

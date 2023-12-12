@@ -1,14 +1,17 @@
-
+// file_io.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "file_io.h"
-#include "image.h"
-
-// Global variable to store the loaded image
 
 
-int loadImage(const char* filename) {
+PGMImage* loadedPGMImage = NULL;
+PPMImage* loadedPPMImage = NULL;
+
+// Implement other functions...
+
+
+int loadPGMImage(const char* filename) {
     FILE* file = fopen(filename, "rb");
 
     if (file == NULL) {
@@ -30,21 +33,24 @@ int loadImage(const char* filename) {
     }
 
     // Allocate memory for image data
-    loadedImage = createPGMImage(width, height);
+    loadedPGMImage = createPGMImage(width, height);
 
     // Read image data
-    fread(loadedImage->data, sizeof(unsigned char), width * height, file);
+    fread(loadedPGMImage->data, sizeof(unsigned char), width * height, file);
 
     fclose(file);
     printf("Image loaded successfully.\n");
     return 0;
 }
 
+int loadPPMImage(const char* filename) {
+    // Implementation for loading PPM image
+    // ...
+}
 
-
-void saveModifiedImage(const char* outputFilename) {
+void savePGMImage(const char* outputFilename) {
     // Check if an image is loaded
-    if (loadedImage == NULL) {
+    if (loadedPGMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
         return;
     }
@@ -62,17 +68,26 @@ void saveModifiedImage(const char* outputFilename) {
     }
 
     // Write PGM header
-    fprintf(file, "P5\n%d %d\n255\n", loadedImage->width, loadedImage->height);
+    fprintf(file, "P5\n%d %d\n255\n", loadedPGMImage->width, loadedPGMImage->height);
 
     // Write image data
-    fwrite(loadedImage->data, sizeof(unsigned char), loadedImage->width * loadedImage->height, file);
+    fwrite(loadedPGMImage->data, sizeof(unsigned char), loadedPGMImage->width * loadedPGMImage->height, file);
 
     fclose(file);
     printf("Image saved successfully to %s.\n", outputPath);
 }
-void cleanupImage() {
-    // Free the loaded image data
-    if (loadedImage != NULL) {
-        freePGMImage(loadedImage);
+
+void savePPMImage(const char* outputFilename) {
+    // Implementation for saving PPM image
+    // ...
+}
+
+void cleanupImages() {
+    // Free memory for loaded images
+    if (loadedPGMImage != NULL) {
+        freePGMImage(loadedPGMImage);
+    }
+    if (loadedPPMImage != NULL) {
+        freePPMImage(loadedPPMImage);
     }
 }

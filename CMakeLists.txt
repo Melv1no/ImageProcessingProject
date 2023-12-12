@@ -6,7 +6,6 @@ project(ImageProcessingProject C)
 set(SOURCES
         src/main.c
         src/image.c
-        src/transformations.c
         src/effects.c
         src/file_io.c
         src/menu.c
@@ -16,7 +15,6 @@ set(SOURCES
 # Add your header files
 set(HEADERS
         include/image.h
-        include/transformations.h
         include/effects.h
         include/file_io.h
         include/menu.h

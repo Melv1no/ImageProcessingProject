@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include "menu.h"
+
+#include <string.h>
+
 #include "file_io.h"
 #include "image.h"
-#include "transformations.h"  // Include the transformations header
 
 #include "effects.h"
 
@@ -16,7 +18,7 @@ void applyEffect() {
     int choice;
 
     // Check if an image is loaded
-    if (loadedImage == NULL) {
+    if (loadedPGMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
         return;
     }
@@ -48,17 +50,34 @@ void applyEffect() {
 }
 void saveImage() {
     // Check if an image is loaded
-    if (loadedImage == NULL) {
+    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
         return;
     }
 
-    // Ask the user for the output filename
+    // Ask the user for the output filename and folder
     char outputFilename[100];  // Adjust the size based on your needs
+
+
     printf("Enter the filename to save the image: ");
     scanf("%s", outputFilename);
 
-    // Save the image (implement saveImage function in file_io.c)
-    saveModifiedImage(outputFilename);  // <-- Call the correct function here
+
+
+    // Determine the file extension
+    char* extension = strrchr(outputFilename, '.');
+    if (extension == NULL) {
+        fprintf(stderr, "Error: File extension not found.\n");
+        return;
+    }
+
+    // Save the image based on the file extension
+    if (strcmp(extension, ".pgm") == 0) {
+        savePGMImage(outputFilename);
+    } else if (strcmp(extension, ".ppm") == 0) {
+        savePPMImage(outputFilename);
+    } else {
+        fprintf(stderr, "Error: Unsupported file extension.\n");
+    }
 }
 

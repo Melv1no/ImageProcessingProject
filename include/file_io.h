@@ -5,10 +5,15 @@
 
 #include "image.h"
 
-extern PGMImage* loadedImage;
+// External variables for loaded images
+extern PGMImage* loadedPGMImage;
+extern PPMImage* loadedPPMImage;
 
-int loadImage(const char* filename);
-void saveModifiedImage(const char* outputFilename);
-void cleanupImage();
+int loadPGMImage(const char* filename);
+int loadPPMImage(const char* filename);
+void savePGMImage(const char* outputFilename);
+void savePPMImage(const char* outputFilename);
+void cleanupPGMImage();
+void cleanupPPMImage();
 
 #endif // FILE_IO_H
