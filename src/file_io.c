@@ -132,6 +132,7 @@ void savePPMImage(const char* outputFilename) {
     printf("PPM Image saved successfully to %s.\n", outputFilename);
 }
 
+
 void cleanupImages() {
     // Free memory for loaded images
     if (loadedPGMImage != NULL) {

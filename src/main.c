@@ -42,7 +42,8 @@ int main() {
         printf("\nImage Processing Menu:\n");
         printf("1. Apply Effect\n");
         printf("2. Save Image\n");
-        printf("3. Exit\n");
+        printf("3. Load other image\n");
+        printf("99. Exit\n");
 
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -55,13 +56,16 @@ int main() {
                 saveImage();
             break;
             case 3:
+                main();
+            break;
+            case 99:
                 printf("Exiting...\n");
             break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
 
-    } while (choice != 4);
+    } while (choice != 99);
 
     return 0;
 }

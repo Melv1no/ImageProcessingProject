@@ -25,7 +25,9 @@ void applyEffect() {
     printf("\nChoose an Effect:\n");
     printf("1. Blur\n");
     printf("2. Mirror\n");
-    printf("3. Back to Main Menu\n");
+    printf("3. Resize\n");
+    printf("4. Rotation\n");
+    printf("99. Back to Main Menu\n");
 
     printf("Enter your choice: ");
     scanf("%d", &choice);
@@ -36,8 +38,15 @@ void applyEffect() {
         break;
         case 2:
             applyMirrorEffect();
-        break;
         case 3:
+            applyImageSize();
+        case 4:
+            double angle;
+        printf("Enter the rotation angle in degrees: ");
+        scanf("%lf", &angle);
+        applyImageRotation(angle);
+        break;
+        case 99:
             printf("Returning to the main menu.\n");
         break;
         default:
