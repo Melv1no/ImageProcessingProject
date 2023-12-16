@@ -1,18 +1,14 @@
 #include <stdio.h>
-#include "menu.h"
-
 #include <string.h>
 
+#include "menu.h"
 #include "file_io.h"
 #include "image.h"
-
 #include "effects.h"
 
 // External declarations for image variables
-extern int imageWidth;
-extern int imageHeight;
-extern unsigned char* imageData;
-
+extern PGMImage* loadedPGMImage;
+extern PPMImage* loadedPPMImage;
 
 void applyEffect() {
     int choice;
@@ -27,6 +23,12 @@ void applyEffect() {
     printf("2. Mirror\n");
     printf("3. Resize\n");
     printf("4. Rotation\n");
+    printf("5. Generate Mipmap\n");
+    printf("6. Negative Effect\n");
+    printf("7. Grayscale Effect\n");
+    printf("8. Pixelization Effect\n");
+    printf("9. Sobel Effect\n");
+    printf("10. Gaussian Effect\n");
     printf("99. Back to Main Menu\n");
 
     printf("Enter your choice: ");
@@ -42,28 +44,49 @@ void applyEffect() {
 
             printf("Enter your choice: ");
             scanf("%d", &choice);
-            if(choice > 4) {
+            if (choice > 4) {
                 break;
             }
-            applyBlurEffect(/*choice*/);
-        break;
+            applyBlurEffect(choice);
+            break;
         case 2:
             applyMirrorEffect();
+            break;
         case 3:
             applyImageSize();
+            break;
         case 4:
             double angle;
-        printf("Enter the rotation angle in degrees: ");
-        scanf("%lf", &angle);
-        applyImageRotation(angle);
+            printf("Enter the rotation angle in degrees: ");
+            scanf("%lf", &angle);
+            applyImageRotation(angle);
+            break;
+        case 5:
+            generateMipmap();
+            break;
+        case 6:
+            applyNegativeEffect();
+            break;
+        case 7:
+            applyGrayscaleEffect();
+            break;
+        case 8:
+            applyPixelizationEffect();
+            break;
+        case 9:
+            applySobelEffect();
+        break;
+        case 10:
+            applyGaussianEffect();
         break;
         case 99:
             printf("Returning to the main menu.\n");
-        break;
+            break;
         default:
             printf("Invalid choice. Returning to the main menu.\n");
     }
 }
+
 void saveImage() {
     if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
@@ -89,4 +112,3 @@ void saveImage() {
         fprintf(stderr, "Error: Unsupported file extension.\n");
     }
 }
-

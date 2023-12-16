@@ -258,7 +258,7 @@ void applyImageRotation(double angle) {
     }
 }
 
-void applyPixelationEffect(int blockSize) {
+void applyPixelizationEffect(int blockSize) {
     // Check if an image is loaded
     if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
@@ -427,7 +427,7 @@ void applyNegativeEffect() {
 }
 
 
-void convertToGrayscale() {
+void applyGrayscaleEffect() {
     // Check if an image is loaded
     if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
         fprintf(stderr, "Error: No image loaded.\n");
@@ -549,4 +549,123 @@ void generateMipmap() {
         loadedPPMImage->height = baseHeight;
         loadedPPMImage->data = baseData;
     }
+}
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "image.h"
+
+// Fonction pour appliquer l'opérateur de Sobel à une image PGM
+void applySobelEffect() {
+    // Vérifier si une image est chargée
+    if (loadedPGMImage == NULL) {
+        fprintf(stderr, "Erreur : Aucune image chargée.\n");
+        return;
+    }
+
+    // Créer une image temporaire pour stocker le résultat du filtre de Sobel
+    PGMImage* sobelImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);
+
+    // Définir les noyaux de Sobel pour la détection de contour
+    int sobelKernelX[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
+    int sobelKernelY[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
+
+    // Appliquer le filtre de Sobel
+    for (int row = 1; row < loadedPGMImage->height - 1; ++row) {
+        for (int col = 1; col < loadedPGMImage->width - 1; ++col) {
+            int gx = 0, gy = 0;
+
+            // Appliquer le noyau de Sobel en X et Y
+            for (int i = -1; i <= 1; ++i) {
+                for (int j = -1; j <= 1; ++j) {
+                    gx += sobelKernelX[i + 1][j + 1] * loadedPGMImage->data[(row + i) * loadedPGMImage->width + (col + j)];
+                    gy += sobelKernelY[i + 1][j + 1] * loadedPGMImage->data[(row + i) * loadedPGMImage->width + (col + j)];
+                }
+            }
+
+            // Calculer le gradient total
+            int gradient = (int)sqrt(gx * gx + gy * gy);
+
+            // Limiter la valeur du gradient à 255
+            sobelImage->data[row * loadedPGMImage->width + col] = (unsigned char)(gradient > 255 ? 255 : gradient);
+        }
+    }
+
+    // Copier l'image résultante dans l'image originale
+    for (int i = 0; i < loadedPGMImage->width * loadedPGMImage->height; ++i) {
+        loadedPGMImage->data[i] = sobelImage->data[i];
+    }
+
+    // Libérer l'image temporaire
+    freePGMImage(sobelImage);
+
+    printf("Effet appliqué : Détection de contour (Sobel)\n");
+}
+void applyGaussianEffect() {
+    // Vérifier si une image est chargée
+    if (loadedPGMImage == NULL) {
+        fprintf(stderr, "Erreur : Aucune image chargée.\n");
+        return;
+    }
+
+    // Créer une image temporaire pour stocker le résultat de l'effet gaussien
+    PGMImage* gaussianImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);
+
+    // Définir la taille du noyau gaussien (3x3 par exemple)
+    int kernelSize = 3;
+    double sigma = 1.0;
+
+    // Calculer la taille du noyau (impair)
+    int halfKernelSize = kernelSize / 2;
+
+    // Créer le noyau gaussien
+    double** gaussianKernel = (double**)malloc(kernelSize * sizeof(double*));
+    for (int i = 0; i < kernelSize; ++i) {
+        gaussianKernel[i] = (double*)malloc(kernelSize * sizeof(double));
+    }
+
+    // Remplir le noyau gaussien
+    double sum = 0.0;
+    for (int i = -halfKernelSize; i <= halfKernelSize; ++i) {
+        for (int j = -halfKernelSize; j <= halfKernelSize; ++j) {
+            gaussianKernel[i + halfKernelSize][j + halfKernelSize] = exp(-(i * i + j * j) / (2 * sigma * sigma));
+            sum += gaussianKernel[i + halfKernelSize][j + halfKernelSize];
+        }
+    }
+
+    // Normaliser le noyau gaussien
+    for (int i = 0; i < kernelSize; ++i) {
+        for (int j = 0; j < kernelSize; ++j) {
+            gaussianKernel[i][j] /= sum;
+        }
+    }
+
+    // Appliquer le noyau gaussien à chaque pixel de l'image
+    for (int row = halfKernelSize; row < loadedPGMImage->height - halfKernelSize; ++row) {
+        for (int col = halfKernelSize; col < loadedPGMImage->width - halfKernelSize; ++col) {
+            double sum = 0.0;
+            for (int i = -halfKernelSize; i <= halfKernelSize; ++i) {
+                for (int j = -halfKernelSize; j <= halfKernelSize; ++j) {
+                    sum += loadedPGMImage->data[(row + i) * loadedPGMImage->width + (col + j)] * gaussianKernel[i + halfKernelSize][j + halfKernelSize];
+                }
+            }
+            gaussianImage->data[row * loadedPGMImage->width + col] = (unsigned char)sum;
+        }
+    }
+
+    // Copier l'image résultante dans l'image originale
+    for (int i = 0; i < loadedPGMImage->width * loadedPGMImage->height; ++i) {
+        loadedPGMImage->data[i] = gaussianImage->data[i];
+    }
+
+    // Libérer le noyau gaussien
+    for (int i = 0; i < kernelSize; ++i) {
+        free(gaussianKernel[i]);
+    }
+    free(gaussianKernel);
+
+    // Libérer l'image temporaire
+    freePGMImage(gaussianImage);
+
+    printf("Effet appliqué : Effet gaussien\n");
 }
