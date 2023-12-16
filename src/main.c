@@ -56,6 +56,7 @@ int main() {
                 saveImage();
             break;
             case 3:
+                cleanupImages();
                 main();
             break;
             case 99:

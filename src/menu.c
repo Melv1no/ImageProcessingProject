@@ -34,7 +34,18 @@ void applyEffect() {
 
     switch (choice) {
         case 1:
-            applyBlurEffect();
+            printf("\nBlur level:\n");
+            printf("1. Low\n");
+            printf("2. Medium\n");
+            printf("3. Strong\n");
+            printf("4. Very Strong\n");
+
+            printf("Enter your choice: ");
+            scanf("%d", &choice);
+            if(choice > 4) {
+                break;
+            }
+            applyBlurEffect(/*choice*/);
         break;
         case 2:
             applyMirrorEffect();

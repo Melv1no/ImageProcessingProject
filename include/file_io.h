@@ -15,7 +15,6 @@ int loadPPMImage(const char* filename);
 void savePGMImage(const char* outputFilename);
 void savePPMImage(const char* outputFilename);
 
-void cleanupPGMImage();
-void cleanupPPMImage();
+void cleanupImages();
 
 #endif // FILE_IO_H

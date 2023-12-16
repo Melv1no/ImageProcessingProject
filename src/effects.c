@@ -1,6 +1,8 @@
 #include "effects.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "math.h"
 #include "file_io.h"
 #include "image.h"  // Incluez le fichier d'en-tête pour les images
@@ -253,5 +255,298 @@ void applyImageRotation(double angle) {
         freePPMImage(loadedPPMImage);
         loadedPPMImage = rotatedPPMImage;
         printf("PPM Image rotated by %f degrees.\n", angle);
+    }
+}
+
+void applyPixelationEffect(int blockSize) {
+    // Check if an image is loaded
+    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
+        fprintf(stderr, "Error: No image loaded.\n");
+        return;
+    }
+
+    if (loadedPGMImage != NULL) {
+        // For PGM images
+        int imageWidth = loadedPGMImage->width;
+        int imageHeight = loadedPGMImage->height;
+        unsigned char* imageData = loadedPGMImage->data;
+
+        // Calculate the number of blocks in each dimension
+        int blocksX = (int)ceil((double)imageWidth / blockSize);
+        int blocksY = (int)ceil((double)imageHeight / blockSize);
+
+        // Create a temporary image to store the pixelated result
+        PGMImage* pixelatedImage = createPGMImage(imageWidth, imageHeight);
+
+        // Apply the pixelation effect
+        for (int blockX = 0; blockX < blocksX; ++blockX) {
+            for (int blockY = 0; blockY < blocksY; ++blockY) {
+                // Calculate the bounds of the current block
+                int startX = blockX * blockSize;
+                int startY = blockY * blockSize;
+                int endX = fmin(startX + blockSize, imageWidth);
+                int endY = fmin(startY + blockSize, imageHeight);
+
+                // Calculate the average color of the current block
+                int avgIntensity = 0;
+                int pixelCount = 0;
+
+                for (int x = startX; x < endX; ++x) {
+                    for (int y = startY; y < endY; ++y) {
+                        int index = y * imageWidth + x;
+                        avgIntensity += imageData[index];
+                        pixelCount++;
+                    }
+                }
+
+                avgIntensity /= pixelCount;
+
+                // Fill the current block with the average intensity
+                for (int x = startX; x < endX; ++x) {
+                    for (int y = startY; y < endY; ++y) {
+                        int index = y * imageWidth + x;
+                        pixelatedImage->data[index] = avgIntensity;
+                    }
+                }
+            }
+        }
+
+        // Replace the original PGM image with the pixelated image
+        freePGMImage(loadedPGMImage);
+        loadedPGMImage = pixelatedImage;
+
+        printf("Effect applied: Pixelation (PGM)\n");
+
+    } else if (loadedPPMImage != NULL) {
+        // For PPM images
+        int imageWidth = loadedPPMImage->width;
+        int imageHeight = loadedPPMImage->height;
+        unsigned char* imageData = loadedPPMImage->data;
+
+        // Calculate the number of blocks in each dimension
+        int blocksX = (int)ceil((double)imageWidth / blockSize);
+        int blocksY = (int)ceil((double)imageHeight / blockSize);
+
+        // Create a temporary image to store the pixelated result
+        PPMImage* pixelatedImage = createPPMImage(imageWidth, imageHeight);
+
+        // Apply the pixelation effect
+        for (int blockX = 0; blockX < blocksX; ++blockX) {
+            for (int blockY = 0; blockY < blocksY; ++blockY) {
+                // Calculate the bounds of the current block
+                int startX = blockX * blockSize;
+                int startY = blockY * blockSize;
+                int endX = fmin(startX + blockSize, imageWidth);
+                int endY = fmin(startY + blockSize, imageHeight);
+
+                // Calculate the average color of the current block
+                int avgRed = 0, avgGreen = 0, avgBlue = 0;
+                int pixelCount = 0;
+
+                for (int x = startX; x < endX; ++x) {
+                    for (int y = startY; y < endY; ++y) {
+                        int index = (y * imageWidth + x) * 3;  // For PPM images, each pixel has three components (RGB)
+                        avgRed += imageData[index];
+                        avgGreen += imageData[index + 1];
+                        avgBlue += imageData[index + 2];
+                        pixelCount++;
+                    }
+                }
+
+                avgRed /= pixelCount;
+                avgGreen /= pixelCount;
+                avgBlue /= pixelCount;
+
+                // Fill the current block with the average color
+                for (int x = startX; x < endX; ++x) {
+                    for (int y = startY; y < endY; ++y) {
+                        int index = (y * imageWidth + x) * 3;
+                        pixelatedImage->data[index] = avgRed;
+                        pixelatedImage->data[index + 1] = avgGreen;
+                        pixelatedImage->data[index + 2] = avgBlue;
+                    }
+                }
+            }
+        }
+
+        // Replace the original PPM image with the pixelated image
+        freePPMImage(loadedPPMImage);
+        loadedPPMImage = pixelatedImage;
+
+        printf("Effect applied: Pixelation (PPM)\n");
+    }
+}
+
+void applyNegativeEffect() {
+    // Check if an image is loaded
+    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
+        fprintf(stderr, "Error: No image loaded.\n");
+        return;
+    }
+
+    if (loadedPGMImage != NULL) {
+        // For PGM images
+        int imageWidth = loadedPGMImage->width;
+        int imageHeight = loadedPGMImage->height;
+        unsigned char* imageData = loadedPGMImage->data;
+
+        // Create a temporary image to store the negative result
+        PGMImage* negativeImage = createPGMImage(imageWidth, imageHeight);
+
+        // Apply the negative effect
+        for (int i = 0; i < imageWidth * imageHeight; ++i) {
+            negativeImage->data[i] = 255 - imageData[i];
+        }
+
+        // Replace the original PGM image with the negative image
+        freePGMImage(loadedPGMImage);
+        loadedPGMImage = negativeImage;
+
+        printf("Effect applied: Negative (PGM)\n");
+
+    } else if (loadedPPMImage != NULL) {
+        // For PPM images
+        int imageWidth = loadedPPMImage->width;
+        int imageHeight = loadedPPMImage->height;
+        unsigned char* imageData = loadedPPMImage->data;
+
+        // Create a temporary image to store the negative result
+        PPMImage* negativeImage = createPPMImage(imageWidth, imageHeight);
+
+        // Apply the negative effect
+        for (int i = 0; i < imageWidth * imageHeight * 3; ++i) {
+            negativeImage->data[i] = 255 - imageData[i];
+        }
+
+        // Replace the original PPM image with the negative image
+        freePPMImage(loadedPPMImage);
+        loadedPPMImage = negativeImage;
+
+        printf("Effect applied: Negative (PPM)\n");
+    }
+}
+
+
+void convertToGrayscale() {
+    // Check if an image is loaded
+    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
+        fprintf(stderr, "Error: No image loaded.\n");
+        return;
+    }
+
+    if (loadedPGMImage != NULL) {
+        // For PGM images
+        int imageWidth = loadedPGMImage->width;
+        int imageHeight = loadedPGMImage->height;
+        unsigned char* imageData = loadedPGMImage->data;
+
+        // The grayscale conversion logic for PGM images (already grayscale)
+
+        printf("Effect applied: Convert to Grayscale (PGM)\n");
+
+    } else if (loadedPPMImage != NULL) {
+        // For PPM images
+        int imageWidth = loadedPPMImage->width;
+        int imageHeight = loadedPPMImage->height;
+        unsigned char* imageData = loadedPPMImage->data;
+
+        // Create a temporary PGM image to store the grayscale result
+        PGMImage* grayscaleImage = createPGMImage(imageWidth, imageHeight);
+
+        // Convert the PPM image to grayscale (average of R, G, B values)
+        for (int i = 0; i < imageWidth * imageHeight; ++i) {
+            grayscaleImage->data[i] = (imageData[i * 3] + imageData[i * 3 + 1] + imageData[i * 3 + 2]) / 3;
+        }
+
+        // Replace the original PPM image with the grayscale image
+        freePPMImage(loadedPPMImage);
+        loadedPGMImage = grayscaleImage;
+
+        printf("Effect applied: Convert to Grayscale (PPM)\n");
+    }
+}
+
+// Helper function to get the pixel value at a specific position in the image
+unsigned char getPixelValue(const unsigned char* data, int width, int x, int y) {
+    return data[y * width + x];
+}
+
+// Helper function to set the pixel value at a specific position in the image
+void setPixelValue(unsigned char* data, int width, int x, int y, unsigned char value) {
+    data[y * width + x] = value;
+}
+
+// Generate Mipmap logic for both PGM and PPM images
+void generateMipmap() {
+    int baseWidth, baseHeight;
+    unsigned char* baseData;
+
+    // Determine the image type and set baseWidth, baseHeight, and baseData accordingly
+    if (loadedPGMImage != NULL) {
+        baseWidth = loadedPGMImage->width;
+        baseHeight = loadedPGMImage->height;
+        baseData = loadedPGMImage->data;
+    } else if (loadedPPMImage != NULL) {
+        baseWidth = loadedPPMImage->width;
+        baseHeight = loadedPPMImage->height;
+        baseData = loadedPPMImage->data;
+    } else {
+        fprintf(stderr, "Error: No image loaded.\n");
+        return;
+    }
+
+    while (baseWidth > 1 && baseHeight > 1) {
+        // Create a smaller image with half the width and height
+        int newWidth = baseWidth / 2;
+        int newHeight = baseHeight / 2;
+        unsigned char* newData;
+
+        if (loadedPGMImage != NULL) {
+            newData = malloc(newWidth * newHeight * sizeof(unsigned char));
+
+            // Downsample using nearest-neighbor interpolation for PGM image
+            for (int y = 0; y < newHeight; ++y) {
+                for (int x = 0; x < newWidth; ++x) {
+                    // Sample the pixel value from the original image
+                    unsigned char sample = getPixelValue(baseData, baseWidth, x * 2, y * 2);
+                    // Set the pixel value in the new image
+                    setPixelValue(newData, newWidth, x, y, sample);
+                }
+            }
+        } else { // loadedPPMImage != NULL
+            newData = malloc(newWidth * newHeight * 3 * sizeof(unsigned char));
+
+            // Downsample using nearest-neighbor interpolation for PPM image
+            for (int y = 0; y < newHeight; ++y) {
+                for (int x = 0; x < newWidth; ++x) {
+                    for (int c = 0; c < 3; ++c) {
+                        // Sample the pixel value from the original image
+                        unsigned char sample = getPixelValue(baseData, baseWidth * 3, x * 2 * 3, y * 2) / 3;
+                        // Set the pixel value in the new image
+                        setPixelValue(newData, newWidth * 3, x * 3, y, sample);
+                    }
+                }
+            }
+        }
+
+        // Free the previous data and update the image
+        free(baseData);
+        baseData = newData;
+        baseWidth = newWidth;
+        baseHeight = newHeight;
+
+        // Output for demonstration purposes
+        printf("Generated Mipmap level: %dx%d\n", baseWidth, baseHeight);
+    }
+
+    // Update the loaded image with the final Mipmap level
+    if (loadedPGMImage != NULL) {
+        loadedPGMImage->width = baseWidth;
+        loadedPGMImage->height = baseHeight;
+        loadedPGMImage->data = baseData;
+    } else { // loadedPPMImage != NULL
+        loadedPPMImage->width = baseWidth;
+        loadedPPMImage->height = baseHeight;
+        loadedPPMImage->data = baseData;
     }
 }

@@ -42,3 +42,10 @@
 48	1294	7241162019861482	image_processing.exe	bb1c25733d4e21f1
 2	47	7241162346354386	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
 47	1291	7241162346914516	image_processing.exe	bb1c25733d4e21f1
+1	54	7241165725588952	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
+4	58	7241165725638952	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+5	66	7241165725718971	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
+6	68	7241165725738975	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
+68	1313	7241165726309106	image_processing.exe	bb1c25733d4e21f1
+1	50	7241166179710347	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+50	1295	7241166180270466	image_processing.exe	bb1c25733d4e21f1
