@@ -1,14 +1,14 @@
 # ninja log v5
-2	107	7246326090292395	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
+4	104	7246329870711035	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
 104	193	7240324853056881	ImageProcessingExam.exe	d406c5dd765d569c
-6	60	7246321770076565	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+2	63	7246329870302746	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
 12	54	7240342870158274	CMakeFiles/image_processing.dir/src/bonus.c.obj	fd0edcaa23fb6bd
 3	44	7241025644148678	CMakeFiles/image_processing.dir/src/transformations.c.obj	51a5b88535dea9ab
 2	60	7246321770056671	CMakeFiles/image_processing.dir/src/image.c.obj	1fdc48832003ccdb
 4	59	7246321770056671	CMakeFiles/image_processing.dir/src/main.c.obj	388b547fa1875802
 9	71	7246321770176698	CMakeFiles/image_processing.dir/src/file_io.c.obj	823f9d1731af8f02
-107	1705	7246326091135871	image_processing.exe	bb1c25733d4e21f1
-1	87	7246329869479427	build.ninja	3230da3460be1c7b
-2	63	7246329870302746	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
-4	104	7246329870711035	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
 105	1653	7246329871558338	image_processing.exe	bb1c25733d4e21f1
+1	87	7246330351564631	build.ninja	3230da3460be1c7b
+2	61	7246333085524962	CMakeFiles/image_processing.dir/src/menu.c.obj	db6eb080c0cedf82
+5	103	7246333085948367	CMakeFiles/image_processing.dir/src/effects.c.obj	b73bcc935ef76ed9
+103	1622	7246333086768773	image_processing.exe	bb1c25733d4e21f1

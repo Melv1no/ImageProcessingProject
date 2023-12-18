@@ -8,7 +8,7 @@
 extern PGMImage* loadedPGMImage;
 extern PPMImage* loadedPPMImage;
 
-void applyBlurEffect();
+void applyBlurEffect(int level);
 void applyMirrorEffect();
 void applyImageSize();
 void applyImageRotation(double angle);

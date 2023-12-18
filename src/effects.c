@@ -7,52 +7,51 @@
 #include "file_io.h"
 #include "image.h"
 
-
-void applyBlurEffect() {
+void applyBlurEffect(int level) {
     if (isPGMImageLoaded) {
         PGMImage* blurredImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);
 
-        for (int row = 4; row < loadedPGMImage->height - 4; ++row) {
-            for (int col = 4; col < loadedPGMImage->width - 4; ++col) {
+        int kernelSize = 2 * level + 1;
+        int halfKernelSize = kernelSize / 2;
+
+        for (int row = halfKernelSize; row < loadedPGMImage->height - halfKernelSize; ++row) {
+            for (int col = halfKernelSize; col < loadedPGMImage->width - halfKernelSize; ++col) {
                 unsigned int sum = 0;
-                for (int i = -4; i <= 4; ++i) {
-                    for (int j = -4; j <= 4; ++j) {
+                for (int i = -halfKernelSize; i <= halfKernelSize; ++i) {
+                    for (int j = -halfKernelSize; j <= halfKernelSize; ++j) {
                         sum += loadedPGMImage->data[(row + i) * loadedPGMImage->width + (col + j)];
                     }
                 }
-                blurredImage->data[row * loadedPGMImage->width + col] = sum / 81;  // 9x9 = 81
+                blurredImage->data[row * loadedPGMImage->width + col] = sum / (kernelSize * kernelSize);
             }
         }
-
         for (int i = 0; i < loadedPGMImage->width * loadedPGMImage->height; ++i) {
             loadedPGMImage->data[i] = blurredImage->data[i];
         }
-
         freePGMImage(blurredImage);
     } else if (isPPMImageLoaded) {
-        // Apply blur effect for PPM image (considering only the first channel)
         PPMImage* blurredImage = createPPMImage(loadedPPMImage->width, loadedPPMImage->height);
 
-        for (int row = 4; row < loadedPPMImage->height - 4; ++row) {
-            for (int col = 4; col < loadedPPMImage->width - 4; ++col) {
+        int kernelSize = 2 * level + 1;
+        int halfKernelSize = kernelSize / 2;
+
+        for (int row = halfKernelSize; row < loadedPPMImage->height - halfKernelSize; ++row) {
+            for (int col = halfKernelSize; col < loadedPPMImage->width - halfKernelSize; ++col) {
                 unsigned int sum = 0;
-                for (int i = -4; i <= 4; ++i) {
-                    for (int j = -4; j <= 4; ++j) {
+                for (int i = -halfKernelSize; i <= halfKernelSize; ++i) {
+                    for (int j = -halfKernelSize; j <= halfKernelSize; ++j) {
                         sum += loadedPPMImage->data[3 * ((row + i) * loadedPPMImage->width + (col + j))];
                     }
                 }
-                blurredImage->data[3 * (row * loadedPPMImage->width + col)] = sum / 81;  // 9x9 = 81
+                blurredImage->data[3 * (row * loadedPPMImage->width + col)] = sum / (kernelSize * kernelSize);
             }
         }
-
         for (int i = 0; i < loadedPPMImage->width * loadedPPMImage->height * 3; ++i) {
             loadedPPMImage->data[i] = blurredImage->data[i];
         }
-
         freePPMImage(blurredImage);
     }
-
-    printf("Effect applied: Strong Blur\n");
+    printf("Effect applied: Blur (Level %d)\n", level);
 }
 
 void applyMirrorEffect() {
@@ -112,6 +111,7 @@ void applyMirrorEffect() {
         printf("Effect applied: Mirror (PPM)\n");
     }
 }
+
 void applyImageSize() {
 
     // Check if a PPM image is loaded
@@ -417,7 +417,6 @@ void applyNegativeEffect() {
     }
 }
 
-
 void applyGrayscaleEffect() {
     // Check if an image is loaded
     if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
@@ -457,17 +456,14 @@ void applyGrayscaleEffect() {
     }
 }
 
-// Helper function to get the pixel value at a specific position in the image
 unsigned char getPixelValue(const unsigned char* data, int width, int x, int y) {
     return data[y * width + x];
 }
 
-// Helper function to set the pixel value at a specific position in the image
 void setPixelValue(unsigned char* data, int width, int x, int y, unsigned char value) {
     data[y * width + x] = value;
 }
 
-// Generate Mipmap logic for both PGM and PPM images
 void generateMipmap() {
     int baseWidth, baseHeight;
     unsigned char* baseData;
@@ -587,6 +583,7 @@ void applySobelEffect() {
 
     printf("Effet appliqué : Détection de contour (Sobel)\n");
 }
+
 void applyGaussianEffect() {
     // Vérifier si une image est chargée
     if (loadedPGMImage == NULL) {

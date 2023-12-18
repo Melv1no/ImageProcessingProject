@@ -39,14 +39,14 @@ void displayApplyEffectMenu() {
     switch (mainMenuChoice) {
         case 1:
             printf("\nBlur level:\n");
-        printf("1. Low\n2. Medium\n3. Strong\n4. Very Strong\n");
+            printf("1. Low\n2. Medium\n3. Strong\n4. Very Strong\n");
 
-        printf("Enter your choice: ");
-        scanf("%d", &subMenuChoice);
-        if (subMenuChoice > 4) {
+            printf("Enter your choice: ");
+            scanf("%d", &subMenuChoice);
+            if (subMenuChoice > 4) {
             break;
-        }
-        applyBlurEffect(subMenuChoice);
+                }
+            applyBlurEffect(subMenuChoice);
         break;
         case 2:
             applyMirrorEffect();
