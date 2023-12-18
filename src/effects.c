@@ -55,11 +55,7 @@ void applyBlurEffect(int level) {
 }
 
 void applyMirrorEffect() {
-    // Check if an image is loaded
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+
 
     // Apply the mirror effect based on the image type
     if (loadedPGMImage != NULL) {
@@ -114,11 +110,6 @@ void applyMirrorEffect() {
 
 void applyImageSize() {
 
-    // Check if a PPM image is loaded
-    if (loadedPPMImage == NULL && loadedPGMImage == NULL) {
-        fprintf(stderr, "Error: No PPM image loaded.\n");
-        return;
-    }
     int newWidth, newHeight;
 
     // Prompt the user for the new dimensions (replace this with your own input method)
@@ -182,11 +173,7 @@ void applyImageSize() {
 }
 
 void applyImageRotation(double angle) {
-    // Check if an image is loaded
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+
 
     // Convert angle to radians
     double radians = angle * M_PI / 180.0;
@@ -250,11 +237,7 @@ void applyImageRotation(double angle) {
 }
 
 void applyPixelizationEffect(int blockSize) {
-    // Check if an image is loaded
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+
 
     if (loadedPGMImage != NULL) {
         // For PGM images
@@ -369,11 +352,7 @@ void applyPixelizationEffect(int blockSize) {
 }
 
 void applyNegativeEffect() {
-    // Check if an image is loaded
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+
 
     if (loadedPGMImage != NULL) {
         // For PGM images
@@ -418,11 +397,7 @@ void applyNegativeEffect() {
 }
 
 void applyGrayscaleEffect() {
-    // Check if an image is loaded
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+
 
     if (loadedPGMImage != NULL) {
         // For PGM images
@@ -539,11 +514,7 @@ void generateMipmap() {
 }
 
 void applySobelEffect() {
-    // Vérifier si une image est chargée
-    if (loadedPGMImage == NULL) {
-        fprintf(stderr, "Erreur : Aucune image chargée.\n");
-        return;
-    }
+
 
     // Créer une image temporaire pour stocker le résultat du filtre de Sobel
     PGMImage* sobelImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);
@@ -585,11 +556,7 @@ void applySobelEffect() {
 }
 
 void applyGaussianEffect() {
-    // Vérifier si une image est chargée
-    if (loadedPGMImage == NULL) {
-        fprintf(stderr, "Erreur : Aucune image chargée.\n");
-        return;
-    }
+
 
     // Créer une image temporaire pour stocker le résultat de l'effet gaussien
     PGMImage* gaussianImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);

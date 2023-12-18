@@ -102,5 +102,86 @@ void saveImage() {
     } else {
         savePPMImage(outputFilename);
     }
+}
 
+void debug() {
+    // Chargez une image initiale (remplacez "example.ppm" par le chemin de votre image)
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+
+    // Appliquez une séquence d'effets prédéfinis pour les images PPM
+    applyBlurEffect(2);  // Applique un flou moyen
+    savePPMImage("result_blur.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyMirrorEffect();
+    savePPMImage("result_mirror.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyImageSize();
+    savePPMImage("result_resize.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyImageRotation(45.0);  // Rotation de 45 degrés
+    savePPMImage("result_rotation.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    generateMipmap();
+    savePPMImage("result_mipmap.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyNegativeEffect();
+    savePPMImage("result_negative.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyGrayscaleEffect();
+    savePPMImage("result_grayscale.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyPixelizationEffect();
+    savePPMImage("result_pixelization.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applySobelEffect();
+    savePPMImage("result_sobel.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyGaussianEffect();
+    savePPMImage("result_gaussian.ppm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    // Appliquez une séquence d'effets prédéfinis pour les images PGM
+    applyBlurEffect(2);  // Applique un flou moyen
+    savePGMImage("result_blur.pgm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyImageSize();
+    savePGMImage("result_resize.pgm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyImageRotation(45.0);  // Rotation de 45 degrés
+    savePGMImage("result_rotation.pgm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyNegativeEffect();
+    savePGMImage("result_negative.pgm");
+    cleanupImages();
+    loadPPMImage("C:\\sample.ppm");
+    loadPGMImage("C:\\sample.pgm");
+    applyGrayscaleEffect();
+    savePGMImage("result_grayscale.pgm");
+    cleanupImages();
 }

@@ -51,6 +51,7 @@ int main() {
         printf("1. Apply Effect\n");
         printf("2. Save Image\n");
         printf("3. Load other image\n");
+        printf("4. developer tools\n");
         printf("99. Exit\n");
 
         printf("Enter your choice: ");
@@ -66,6 +67,9 @@ int main() {
             case 3:
                 cleanupImages();
                 main();
+            break;
+            case 4:
+                debug();
             break;
             case 99:
                 printf("Exiting...\n");

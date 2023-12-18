@@ -3,5 +3,6 @@
 
 void displayApplyEffectMenu();
 void saveImage();
+void debug();
 
 #endif
