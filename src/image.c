@@ -1,4 +1,9 @@
-// image.c
+/*
+ * Author: Melvin OLIVET
+ * Date: {{publish_date}}
+ * Description:
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "image.h"
@@ -24,11 +29,6 @@ PGMImage* createPGMImage(int width, int height) {
     return image;
 }
 
-void freePGMImage(PGMImage* image) {
-    free(image->data);
-    free(image);
-}
-
 PPMImage* createPPMImage(int width, int height) {
     PPMImage* image = (PPMImage*)malloc(sizeof(PPMImage));
 
@@ -50,7 +50,13 @@ PPMImage* createPPMImage(int width, int height) {
     return image;
 }
 
+void freePGMImage(PGMImage* image) {
+    free(image->data);
+    free(image);
+}
 void freePPMImage(PPMImage* image) {
     free(image->data);
     free(image);
 }
+
+

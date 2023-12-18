@@ -90,7 +90,7 @@ CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/ImageProcessingProject
 CMAKE_LINKER:FILEPATH=C:/Users/Melvin OLIVET/AppData/Local/Programs/CLion Nova/bin/mingw/bin/ld.exe
 
 //make program
-CMAKE_MAKE_PROGRAM:FILEPATH=C:/Users/Melvin OLIVET/AppData/Local/Programs/CLion Nova/bin/ninja/win/x64/ninja.exe
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/Users/MELVIN~1/AppData/Local/Programs/CLion Nova/bin/ninja/win/x64/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.
@@ -224,6 +224,12 @@ ImageProcessingProject_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 ImageProcessingProject_SOURCE_DIR:STATIC=C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject
+
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=C:/MinGW/bin/pkg-config.exe
 
 //Automatically copy dependencies into the output directory for
 // executables.
@@ -420,6 +426,37 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[C:/MinGW/bin/pkg-config.exe][v0.28()]
+GTK3_CFLAGS:INTERNAL=
+GTK3_CFLAGS_I:INTERNAL=
+GTK3_CFLAGS_OTHER:INTERNAL=
+GTK3_FOUND:INTERNAL=
+GTK3_INCLUDEDIR:INTERNAL=
+GTK3_LIBDIR:INTERNAL=
+GTK3_LIBS:INTERNAL=
+GTK3_LIBS_L:INTERNAL=
+GTK3_LIBS_OTHER:INTERNAL=
+GTK3_LIBS_PATHS:INTERNAL=
+GTK3_MODULE_NAME:INTERNAL=
+GTK3_PREFIX:INTERNAL=
+GTK3_STATIC_CFLAGS:INTERNAL=
+GTK3_STATIC_CFLAGS_I:INTERNAL=
+GTK3_STATIC_CFLAGS_OTHER:INTERNAL=
+GTK3_STATIC_LIBDIR:INTERNAL=
+GTK3_STATIC_LIBS:INTERNAL=
+GTK3_STATIC_LIBS_L:INTERNAL=
+GTK3_STATIC_LIBS_OTHER:INTERNAL=
+GTK3_STATIC_LIBS_PATHS:INTERNAL=
+GTK3_VERSION:INTERNAL=
+GTK3_gtk+-3.0_INCLUDEDIR:INTERNAL=
+GTK3_gtk+-3.0_LIBDIR:INTERNAL=
+GTK3_gtk+-3.0_PREFIX:INTERNAL=
+GTK3_gtk+-3.0_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //Install the dependencies listed in your manifest:
 //\n    If this is off, you will have to manually install your dependencies.
 //\n    See https://github.com/microsoft/vcpkg/tree/master/docs/specifications/manifests.md

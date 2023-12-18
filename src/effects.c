@@ -5,20 +5,11 @@
 
 #include "math.h"
 #include "file_io.h"
-#include "image.h"  // Incluez le fichier d'en-tête pour les images
-
-// Definition of loadedImage
+#include "image.h"
 
 
 void applyBlurEffect() {
-    // Check if a PGM or PPM image is loaded
-    if (!isPGMImageLoaded && !isPPMImageLoaded) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
-
     if (isPGMImageLoaded) {
-        // Apply blur effect for PGM image
         PGMImage* blurredImage = createPGMImage(loadedPGMImage->width, loadedPGMImage->height);
 
         for (int row = 4; row < loadedPGMImage->height - 4; ++row) {
@@ -550,12 +541,7 @@ void generateMipmap() {
         loadedPPMImage->data = baseData;
     }
 }
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "image.h"
 
-// Fonction pour appliquer l'opérateur de Sobel à une image PGM
 void applySobelEffect() {
     // Vérifier si une image est chargée
     if (loadedPGMImage == NULL) {

@@ -1,22 +1,24 @@
+/*
+ * Author: Melvin OLIVET
+ * Date: {{publish_date}}
+ * Description: menu
+ */
+
 #include <stdio.h>
 #include <string.h>
 
 #include "menu.h"
 #include "file_io.h"
-#include "image.h"
 #include "effects.h"
 
-// External declarations for image variables
-extern PGMImage* loadedPGMImage;
-extern PPMImage* loadedPPMImage;
+#define MAX_FILENAME_SIZE 100
+#define PPM_FILE_EXT ".ppm"
+#define PGM_FILE_EXT ".pgm"
 
-void applyEffect() {
-    int choice;
-
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
+void displayApplyEffectMenu() {
+    int mainMenuChoice;
+    int subMenuChoice;
+    double angle;
 
     printf("\nChoose an Effect:\n");
     printf("1. Blur\n");
@@ -32,47 +34,43 @@ void applyEffect() {
     printf("99. Back to Main Menu\n");
 
     printf("Enter your choice: ");
-    scanf("%d", &choice);
+    scanf("%d", &mainMenuChoice);
 
-    switch (choice) {
+    switch (mainMenuChoice) {
         case 1:
             printf("\nBlur level:\n");
-            printf("1. Low\n");
-            printf("2. Medium\n");
-            printf("3. Strong\n");
-            printf("4. Very Strong\n");
+        printf("1. Low\n2. Medium\n3. Strong\n4. Very Strong\n");
 
-            printf("Enter your choice: ");
-            scanf("%d", &choice);
-            if (choice > 4) {
-                break;
-            }
-            applyBlurEffect(choice);
+        printf("Enter your choice: ");
+        scanf("%d", &subMenuChoice);
+        if (subMenuChoice > 4) {
             break;
+        }
+        applyBlurEffect(subMenuChoice);
+        break;
         case 2:
             applyMirrorEffect();
-            break;
+        break;
         case 3:
             applyImageSize();
-            break;
+        break;
         case 4:
-            double angle;
             printf("Enter the rotation angle in degrees: ");
-            scanf("%lf", &angle);
-            applyImageRotation(angle);
-            break;
+        scanf("%lf", &angle);
+        applyImageRotation(angle);
+        break;
         case 5:
             generateMipmap();
-            break;
+        break;
         case 6:
             applyNegativeEffect();
-            break;
+        break;
         case 7:
             applyGrayscaleEffect();
-            break;
+        break;
         case 8:
             applyPixelizationEffect();
-            break;
+        break;
         case 9:
             applySobelEffect();
         break;
@@ -81,34 +79,28 @@ void applyEffect() {
         break;
         case 99:
             printf("Returning to the main menu.\n");
-            break;
+        break;
         default:
             printf("Invalid choice. Returning to the main menu.\n");
     }
 }
 
 void saveImage() {
-    if (loadedPGMImage == NULL && loadedPPMImage == NULL) {
-        fprintf(stderr, "Error: No image loaded.\n");
-        return;
-    }
-
-    char outputFilename[100];
+    char outputFilename[MAX_FILENAME_SIZE];
 
     printf("Enter the filename to save the image: ");
     scanf("%s", outputFilename);
 
     char* extension = strrchr(outputFilename, '.');
-    if (extension == NULL) {
-        fprintf(stderr, "Error: File extension not found.\n");
+    if (!extension || (strcmp(extension, PGM_FILE_EXT) && strcmp(extension, PPM_FILE_EXT))) {
+        fprintf(stderr, "Error: Invalid or unsupported file extension.\n");
         return;
     }
 
-    if (strcmp(extension, ".pgm") == 0) {
+    if (strcmp(extension, PGM_FILE_EXT) == 0) {
         savePGMImage(outputFilename);
-    } else if (strcmp(extension, ".ppm") == 0) {
-        savePPMImage(outputFilename);
     } else {
-        fprintf(stderr, "Error: Unsupported file extension.\n");
+        savePPMImage(outputFilename);
     }
+
 }
