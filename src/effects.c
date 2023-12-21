@@ -55,21 +55,16 @@ void applyBlurEffect(int level) {
 }
 
 void applyMirrorEffect() {
-
-
-    // Apply the mirror effect based on the image type
     if (loadedPGMImage != NULL) {
         // PGM Image Mirror Effect
         // Calculate the middle column
         int middleColumn = loadedPGMImage->width / 2;
 
-        // Iterate through each row and swap pixels across the middle column
         for (int row = 0; row < loadedPGMImage->height; ++row) {
             for (int col = 0; col < middleColumn; ++col) {
                 int leftIndex = row * loadedPGMImage->width + col;
                 int rightIndex = row * loadedPGMImage->width + (loadedPGMImage->width - 1 - col);
 
-                // Swap pixel values
                 unsigned char temp = loadedPGMImage->data[leftIndex];
                 loadedPGMImage->data[leftIndex] = loadedPGMImage->data[rightIndex];
                 loadedPGMImage->data[rightIndex] = temp;
@@ -103,7 +98,6 @@ void applyMirrorEffect() {
                 loadedPPMImage->data[rightIndex + 2] = tempBlue;
             }
         }
-
         printf("Effect applied: Mirror (PPM)\n");
     }
 }
@@ -112,27 +106,20 @@ void applyImageSize() {
 
     int newWidth, newHeight;
 
-    // Prompt the user for the new dimensions (replace this with your own input method)
     printf("Enter the new width and height (e.g., 1920x1080): ");
     scanf("%dx%d", &newWidth, &newHeight);
     if(loadedPGMImage != NULL) {
-
-
-        // Create a temporary PGM image with the new dimensions
         PGMImage* resizedImage = createPGMImage(newWidth, newHeight);
 
-        // Calculate the scaling factors for width and height
         double widthScale = (double)loadedPGMImage->width / newWidth;
         double heightScale = (double)loadedPGMImage->height / newHeight;
 
-        // Resize the image using nearest-neighbor interpolation
         for (int row = 0; row < newHeight; ++row) {
             for (int col = 0; col < newWidth; ++col) {
-                // Calculate the corresponding pixel in the original image
+
                 int originalRow = (int)(row * heightScale);
                 int originalCol = (int)(col * widthScale);
 
-                // Copy the pixel from the original image to the resized image
                 resizedImage->data[row * newWidth + col] = loadedPGMImage->data[originalRow * loadedPGMImage->width + originalCol];
             }
         }
