@@ -1,3 +1,0 @@
-C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject/cmake-build-debug/CMakeFiles/image_processing.dir
-C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir

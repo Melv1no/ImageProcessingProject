@@ -577,8 +577,8 @@ void applyGaussianEffect() {
         }
     }
 
-    // Appliquer le noyau gaussien à chaque pixel de l'image
-    for (int row = halfKernelSize; row < loadedPGMImage->height - halfKernelSize; ++row) {
+        // Appliquer le noyau gaussien à chaque pixel de l'image
+        for (int row = halfKernelSize; row < loadedPGMImage->height - halfKernelSize; ++row) {
         for (int col = halfKernelSize; col < loadedPGMImage->width - halfKernelSize; ++col) {
             double sum = 0.0;
             for (int i = -halfKernelSize; i <= halfKernelSize; ++i) {

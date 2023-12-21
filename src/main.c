@@ -13,8 +13,9 @@
 #define MAX_FILENAME_SIZE 100
 #define PPM_FILE_EXT ".ppm"
 #define PGM_FILE_EXT ".pgm"
+int main(){
 
-int main() {
+
     int choice;
     char filename[MAX_FILENAME_SIZE];
 
@@ -66,7 +67,7 @@ int main() {
             break;
             case 3:
                 cleanupImages();
-                main();
+                main(NULL,NULL);
             break;
             case 4:
                 debug();

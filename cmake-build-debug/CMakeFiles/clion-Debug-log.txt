@@ -1,4 +1,4 @@
-"C:\Users\Melvin OLIVET\AppData\Local\Programs\CLion Nova\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Users/Melvin OLIVET/AppData/Local/Programs/CLion Nova/bin/ninja/win/x64/ninja.exe" "-DCMAKE_TOOLCHAIN_FILE=C:\Users\Melvin OLIVET\.vcpkg-clion\vcpkg\scripts\buildsystems\vcpkg.cmake" -G Ninja -S "C:\Users\Melvin OLIVET\CLionProjects\ImageProcessingProject" -B "C:\Users\Melvin OLIVET\CLionProjects\ImageProcessingProject\cmake-build-debug"
--- Configuring done (0.0s)
--- Generating done (0.0s)
--- Build files have been written to: C:/Users/Melvin OLIVET/CLionProjects/ImageProcessingProject/cmake-build-debug
+Cannot generate into /mnt/c/users/Melvin OLIVET/CLionProjects/ImageProcessingProject
+It was created with incompatible generator 'Unix Makefiles'
+
+Please either delete it manually or select another generation directory
