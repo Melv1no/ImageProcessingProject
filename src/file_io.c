@@ -9,8 +9,6 @@ PGMImage* loadedPGMImage = NULL;
 PPMImage* loadedPPMImage = NULL;
 int isPGMImageLoaded = 0;
 int isPPMImageLoaded = 0;
-// Implement other functions...
-
 
 int loadPGMImage(const char* filename) {
     FILE* file = fopen(filename, "rb");

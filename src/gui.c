@@ -1,12 +1,102 @@
 #include "gui.h"
 #include <gtk/gtk.h>
 #include "file_io.h"
-
+#include "effects.h"
+#include <stdbool.h>
 #define MAX_FILENAME_SIZE 100
 #define PPM_FILE_EXT ".ppm"
 #define PGM_FILE_EXT ".pgm"
 
+
 GtkTextBuffer *log_buffer;
+GtkWidget *image_drawing_area;
+
+void displayImage()
+{
+    if (loadedPGMImage != NULL)
+    {
+        PGMImage *pgmImage = loadedPGMImage;
+        if (pgmImage != NULL && pgmImage->data != NULL)
+        {
+            GdkPixbuf *pixbuf = gdk_pixbuf_new_from_data(
+                    pgmImage->data,
+                    GDK_COLORSPACE_RGB,
+                    FALSE,
+                    8,
+                    pgmImage->width,
+                    pgmImage->height,
+                    pgmImage->width * 3,
+                    NULL,
+                    NULL);
+
+            // Get the aspect ratio of the image
+            double aspect_ratio = (double)pgmImage->width / (double)pgmImage->height;
+
+            // Calculate the maximum size that maintains the aspect ratio
+            int max_width = gtk_widget_get_allocated_width(image_drawing_area);
+            int max_height = gtk_widget_get_allocated_height(image_drawing_area);
+            int display_width, display_height;
+
+            display_width = 600;
+            display_height = 300;
+
+            // Scale the image to fit within the calculated dimensions
+            GdkPixbuf *scaled_pixbuf = gdk_pixbuf_scale_simple(
+                    pixbuf,
+                    display_width,
+                    display_height,
+                    GDK_INTERP_BILINEAR);
+
+            gtk_image_set_from_pixbuf(GTK_IMAGE(image_drawing_area), scaled_pixbuf);
+
+            g_object_unref(pixbuf);
+            g_object_unref(scaled_pixbuf);
+        }
+    }
+    else if (loadedPPMImage != NULL)
+    {
+        PPMImage *ppmImage = loadedPPMImage;
+        if (ppmImage != NULL && ppmImage->data != NULL)
+        {
+            GdkPixbuf *pixbuf = gdk_pixbuf_new_from_data(
+                    ppmImage->data,
+                    GDK_COLORSPACE_RGB,
+                    FALSE,
+                    8,
+                    ppmImage->width,
+                    ppmImage->height,
+                    ppmImage->width * 3,
+                    NULL,
+                    NULL);
+
+            // Get the aspect ratio of the image
+            double aspect_ratio = (double)ppmImage->width / (double)ppmImage->height;
+
+            // Calculate the maximum size that maintains the aspect ratio
+            int max_width = gtk_widget_get_allocated_width(image_drawing_area);
+            int max_height = gtk_widget_get_allocated_height(image_drawing_area);
+            int display_width, display_height;
+
+            display_width = 600;
+            display_height = 300;
+
+            // Scale the image to fit within the calculated dimensions
+            GdkPixbuf *scaled_pixbuf = gdk_pixbuf_scale_simple(
+                    pixbuf,
+                    display_width,
+                    display_height,
+                    GDK_INTERP_BILINEAR);
+
+            gtk_image_set_from_pixbuf(GTK_IMAGE(image_drawing_area), scaled_pixbuf);
+
+            g_object_unref(pixbuf);
+            g_object_unref(scaled_pixbuf);
+        }
+    }
+    // Add conditions for other image types if needed
+}
+
+
 
 void append_to_log(const char *format, ...)
 {
@@ -27,9 +117,43 @@ void append_to_log(const char *format, ...)
 
 void onClick_menu_item_save(GtkWidget *widget, gpointer data)
 {
-    // Your code for "Save" menu item click handling goes here
+    GtkWidget *dialog;
+    GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER;
+    gint res;
+
+    dialog = gtk_file_chooser_dialog_new("Select Folder",
+                                         GTK_WINDOW(data),
+                                         action,
+                                         "_Cancel",
+                                         GTK_RESPONSE_CANCEL,
+                                         "_Save",
+                                         GTK_RESPONSE_ACCEPT,
+                                         NULL);
+
+    res = gtk_dialog_run(GTK_DIALOG(dialog));
+    if (res == GTK_RESPONSE_ACCEPT)
+    {
+        char *folder_path;
+        GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
+        folder_path = gtk_file_chooser_get_filename(chooser);
+        g_print("Selected Folder: %s\n", folder_path);
+
+        // Now, you have the folder_path where the user wants to save the image.
+        // You can implement the logic to save the image to this folder.
+        append_to_log("Your image saved as: ");
+        append_to_log(folder_path);
+        append_to_log("\n");
+
+
+        savePGMImage("/mnt/c/test.pgm");
+        g_free(folder_path);
+    }
+
+    gtk_widget_destroy(dialog);
+
     // Append the log message
-    append_to_log("Save menu item clicked.\n");
+
+
 }
 
 void onClick_menu_item_exit(GtkWidget *widget, gpointer data)
@@ -48,7 +172,17 @@ void onClick_menu_item_negative(GtkWidget *widget, gpointer data)
 {
     // Your code for "Negative" menu item click handling goes here
     // Append the log message
-    append_to_log("Negative menu item clicked.\n");
+    if(loadedPGMImage != NULL){
+        append_to_log("Negative effect applied.\n");
+        applyNegativeEffect(loadedPGMImage);
+        displayImage();
+    }else if( loadedPPMImage != NULL){
+        append_to_log("Negative effect applied.\n");
+        applyNegativeEffect(loadedPPMImage);
+        displayImage();
+    }else{
+        append_to_log("Firstly load image.\n");
+    }
 }
 
 void onClick_menu_item_open(GtkWidget *widget, gpointer data)
@@ -82,6 +216,7 @@ void onClick_menu_item_open(GtkWidget *widget, gpointer data)
                 {
                     printf("PGM Image loaded successfully.\n");
                     append_to_log("PGM Image loaded successfully.\n");
+                    displayImage();
                 }
                 else
                 {
@@ -96,6 +231,7 @@ void onClick_menu_item_open(GtkWidget *widget, gpointer data)
                 {
                     printf("PPM Image loaded successfully.\n");
                     append_to_log("PPM Image loaded successfully.\n");
+                    displayImage();
                 }
                 else
                 {
@@ -128,12 +264,20 @@ void create_gui(int argc, char *argv[])
     gtk_init(&argc, &argv);
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "ImageProcessingProject");
-    gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
+    gtk_window_set_default_size(GTK_WINDOW(window), 1920, 1080);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // Create a vertical box
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    image_drawing_area = gtk_image_new();
+
+// Set the fixed size of the image_drawing_area
+    gtk_widget_set_size_request(image_drawing_area, 600, 300);
+
+    gtk_box_pack_start(GTK_BOX(vbox), image_drawing_area, TRUE, TRUE, 0);
+
 
     // Create a menu bar
     GtkWidget *menubar = gtk_menu_bar_new();
@@ -145,7 +289,7 @@ void create_gui(int argc, char *argv[])
 
     // Set the height of the scrolled window to 1/4 of the window size
     GdkGeometry hints;
-    hints.min_height = hints.max_height = 600 / 4;
+    hints.min_height = hints.max_height = 270;
     gtk_window_set_geometry_hints(GTK_WINDOW(scrolled_window), NULL, &hints, GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
 
     gtk_box_pack_end(GTK_BOX(vbox), scrolled_window, TRUE, TRUE, 0);
