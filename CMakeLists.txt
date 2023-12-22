@@ -17,6 +17,7 @@ set(SOURCES
         src/effects.c
         src/file_io.c
         src/menu.c
+        src/gui.c
 )
 
 set(HEADERS
@@ -24,6 +25,7 @@ set(HEADERS
         include/effects.h
         include/file_io.h
         include/menu.h
+        include/gui.h
 )
 
 include_directories(include)

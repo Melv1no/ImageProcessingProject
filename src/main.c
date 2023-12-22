@@ -9,12 +9,17 @@
 
 #include "menu.h"
 #include "file_io.h"
+#include "gui.h"
+#include <gtk/gtk.h>
 
 #define MAX_FILENAME_SIZE 100
 #define PPM_FILE_EXT ".ppm"
 #define PGM_FILE_EXT ".pgm"
-int main(){
 
+
+int main(int argc, char *argv[])
+{
+#ifdef _WIN32
 
     int choice;
     char filename[MAX_FILENAME_SIZE];
@@ -61,20 +66,20 @@ int main(){
         switch (choice) {
             case 1:
                 displayApplyEffectMenu();
-            break;
+                break;
             case 2:
                 saveImage();
-            break;
+                break;
             case 3:
                 cleanupImages();
                 main(NULL,NULL);
-            break;
+                break;
             case 4:
                 debug();
-            break;
+                break;
             case 99:
                 printf("Exiting...\n");
-            break;
+                break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
@@ -82,4 +87,8 @@ int main(){
     } while (choice != 99);
 
     return 0;
+
+#else
+    create_gui(argc, argv);
+#endif
 }

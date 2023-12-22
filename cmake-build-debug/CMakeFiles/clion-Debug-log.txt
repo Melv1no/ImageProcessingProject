@@ -1,4 +1,4 @@
-Cannot generate into /mnt/c/users/Melvin OLIVET/CLionProjects/ImageProcessingProject
-It was created with incompatible generator 'Unix Makefiles'
+Cannot generate into C:\Users\Melvin OLIVET\CLionProjects\ImageProcessingProject
+It is already used for project \mnt\c\users\Melvin OLIVET\CLionProjects\ImageProcessingProject
 
 Please either delete it manually or select another generation directory

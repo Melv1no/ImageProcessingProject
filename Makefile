@@ -177,6 +177,30 @@ src/file_io.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_processing.dir/build.make CMakeFiles/image_processing.dir/src/file_io.c.s
 .PHONY : src/file_io.c.s
 
+src/gui.o: src/gui.c.o
+.PHONY : src/gui.o
+
+# target to build an object file
+src/gui.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_processing.dir/build.make CMakeFiles/image_processing.dir/src/gui.c.o
+.PHONY : src/gui.c.o
+
+src/gui.i: src/gui.c.i
+.PHONY : src/gui.i
+
+# target to preprocess a source file
+src/gui.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_processing.dir/build.make CMakeFiles/image_processing.dir/src/gui.c.i
+.PHONY : src/gui.c.i
+
+src/gui.s: src/gui.c.s
+.PHONY : src/gui.s
+
+# target to generate assembly for a file
+src/gui.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_processing.dir/build.make CMakeFiles/image_processing.dir/src/gui.c.s
+.PHONY : src/gui.c.s
+
 src/image.o: src/image.c.o
 .PHONY : src/image.o
 
@@ -264,6 +288,9 @@ help:
 	@echo "... src/file_io.o"
 	@echo "... src/file_io.i"
 	@echo "... src/file_io.s"
+	@echo "... src/gui.o"
+	@echo "... src/gui.i"
+	@echo "... src/gui.s"
 	@echo "... src/image.o"
 	@echo "... src/image.i"
 	@echo "... src/image.s"
