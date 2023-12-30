@@ -267,6 +267,12 @@ void create_gui(int argc, char *argv[])
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "ImageProcessingProject");
     gtk_window_set_default_size(GTK_WINDOW(window), 960, 540);
+
+    GdkPixbuf *icon = gdk_pixbuf_new_from_file("images/logo.png", NULL);
+    if (icon != NULL) {
+        gtk_window_set_icon(GTK_WINDOW(window), icon);
+    }
+
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // Create a vertical box

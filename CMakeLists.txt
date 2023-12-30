@@ -41,5 +41,5 @@ set_target_properties(image_processing PROPERTIES
     TARGET_LINK_LIBRARIES(image_processing ${GTK3_LIBRARIES})
 
 
-# Link with the math library
+file(COPY ./images DESTINATION ${CMAKE_BINARY_DIR})
 target_link_libraries(image_processing m)
