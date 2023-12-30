@@ -8,6 +8,7 @@ extern int isPPMImageLoaded;
 extern PGMImage* loadedPGMImage;
 extern PPMImage* loadedPPMImage;
 
+
 int loadPGMImage(const char* filename);
 int loadPPMImage(const char* filename);
 
