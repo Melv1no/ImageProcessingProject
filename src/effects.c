@@ -606,3 +606,182 @@ void applyGaussianEffect() {
 
     printf("Effet appliqué : Effet gaussien\n");
 }
+void generateHistogramGray(PGMImage* image, const char* outputFileName) {
+    FILE* file = fopen(outputFileName, "w");
+    if (!file) {
+        fprintf(stderr, "Erreur lors de la creation du fichier PGM pour l'histogramme.\n");
+        return;
+    }
+
+    fprintf(file, "P2\n");
+    fprintf(file, "256 256\n"); // Taille de l'histogramme
+    fprintf(file, "255\n"); // Valeur maximale d'intensite
+
+    // Calculer l'histogramme
+    int pixels[256] = {0};
+    for (int i = 0; i < image->width * image->height; ++i) {
+        pixels[image->data[i]]++;
+    }
+
+    // Trouver la valeur maximale de l'histogramme
+    int maxFrequency = 0;
+    for (int i = 0; i < 256; ++i) {
+        if (pixels[i] > maxFrequency) {
+            maxFrequency = pixels[i];
+        }
+    }
+
+    // Normaliser et ecrire l'histogramme dans le fichier PGM
+    for (int j = 0; j < 256; ++j) {
+        for (int i = 0; i <= 255; ++i) {
+            int normalizedHeight = (pixels[i] * 255) / maxFrequency;
+            if (j >= 255 - normalizedHeight) {
+                fprintf(file, "0 ");  // attribuer 0 pour les pixels representant l'histogramme
+            } else {
+                fprintf(file, "255 ");  // attribuer 255 pour les pixels qui ne representent pas l'histogramme
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    printf("Histogramme en noir et blanc genere avec succes.\n");
+}
+
+// Fonction pour generer un histogramme rouge en ppm
+void generateHistogramRed(PPMImage* image, const char* outputFileName) {
+    char outputFileNameRed[256];  // ou une taille appropriee
+    snprintf(outputFileNameRed, sizeof(outputFileNameRed), "%s_red.ppm", outputFileName);
+
+    FILE* file = fopen(outputFileNameRed, "w");
+    if (!file) {
+        fprintf(stderr, "Erreur lors de la creation du fichier PPM pour l'histogramme rouge.\n");
+        return;
+    }
+
+    fprintf(file, "P3\n");
+    fprintf(file, "256 256\n"); // Taille de l'histogramme
+    fprintf(file, "255\n"); // Valeur maximale d'intensite
+
+    // Calculer l'histogramme rouge
+    int pixels[256] = {0};
+    for (int i = 0; i < image->width * image->height; ++i) {
+        pixels[image->data[i]]++;
+    }
+
+    // Trouver la valeur maximale de l'histogramme
+    int maxFrequency = 0;
+    for (int i = 0; i < 256; ++i) {
+        if (pixels[i] > maxFrequency) {
+            maxFrequency = pixels[i];
+        }
+    }
+
+    // Normaliser et ecrire l'histogramme dans le fichier PPM
+    for (int j = 0; j < 256; ++j) {
+        for (int i = 0; i <= 255; ++i) {
+            int normalizedHeight = (pixels[i] * 255) / maxFrequency;
+            if (j >= 255 - normalizedHeight) {
+                fprintf(file, "255 0 0 ");  // Rouge
+            } else {
+                fprintf(file, "255 255 255 ");  // Fond blanc
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    printf("Histogramme rouge genere avec succes.\n");
+}
+
+// Fonction pour generer un histogramme bleu en ppm
+void generateHistogramBlue(PPMImage* image, const char* outputFileName) {
+    char outputFileNameBlue[256];
+    snprintf(outputFileNameBlue, sizeof(outputFileNameBlue), "%s_blue.ppm", outputFileName);
+
+    FILE* file = fopen(outputFileNameBlue, "w");
+    if (!file) {
+        fprintf(stderr, "Erreur lors de la creation du fichier PPM pour l'histogramme bleu.\n");
+        return;
+    }
+
+    fprintf(file, "P3\n");
+    fprintf(file, "256 256\n"); // Taille de l'histogramme
+    fprintf(file, "255\n"); // Valeur maximale d'intensite
+
+    // Calculer l'histogramme bleu
+    int pixels[256] = {0};
+    for (int i = 0; i < image->width * image->height; ++i) {
+        pixels[image->data[i]]++;
+    }
+
+    // Trouver la valeur maximale de l'histogramme
+    int maxFrequency = 0;
+    for (int i = 0; i < 256; ++i) {
+        if (pixels[i] > maxFrequency) {
+            maxFrequency = pixels[i];
+        }
+    }
+
+    // Normaliser et ecrire l'histogramme dans le fichier PPM
+    for (int j = 0; j < 256; ++j) {
+        for (int i = 0; i <= 255; ++i) {
+            int normalizedHeight = (pixels[i] * 255) / maxFrequency;
+            if (j >= 255 - normalizedHeight) {
+                fprintf(file, "0 0 255 ");  // Bleu
+            } else {
+                fprintf(file, "255 255 255 ");  // Fond blanc
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    printf("Histogramme bleu genere avec succes.\n");
+}
+
+// Fonction pour generer un histogramme vert en ppm
+void generateHistogramGreen(PPMImage* image, const char* outputFileName) {
+    char outputFileNameGreen[256];
+    snprintf(outputFileNameGreen, sizeof(outputFileNameGreen), "%s_green.ppm", outputFileName);
+
+    FILE* file = fopen(outputFileNameGreen, "w");
+    if (!file) {
+        fprintf(stderr, "Erreur lors de la creation du fichier PPM pour l'histogramme vert.\n");
+        return;
+    }
+
+    fprintf(file, "P3\n");
+    fprintf(file, "256 256\n"); // Taille de l'histogramme
+    fprintf(file, "255\n"); // Valeur maximale d'intensite
+
+    // Calculer l'histogramme vert
+    int pixels[256] = {0};
+    for (int i = 0; i < image->width * image->height; ++i) {
+        pixels[image->data[i]]++;
+    }
+
+    // Trouver la valeur maximale de l'histogramme
+    int maxFrequency = 0;
+    for (int i = 0; i < 256; ++i) {
+        if (pixels[i] > maxFrequency) {
+            maxFrequency = pixels[i];
+        }
+    }
+
+    // Normaliser et ecrire l'histogramme dans le fichier PPM
+    for (int j = 0; j < 256; ++j) {
+        for (int i = 0; i <= 255; ++i) {
+            int normalizedHeight = (pixels[i] * 255) / maxFrequency;
+            if (j >= 255 - normalizedHeight) {
+                fprintf(file, "0 255 0 ");  // Vert
+            } else {
+                fprintf(file, "255 255 255 ");  // Fond blanc
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    printf("Histogramme vert genere avec succes.\n");
+}

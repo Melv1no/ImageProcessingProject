@@ -7,10 +7,11 @@
 #define PGM_FILE_EXT ".pgm"
 
 
-static cairo_surface_t *image_surface = NULL;
+static cairo_surface_t* image_surface = NULL;
 GtkTextBuffer* log_buffer;
 char oldfilename;
 cairo_surface_t* cairoSurface;
+GtkWidget* drawing_area;
 
 void append_to_log(const char* format, ...) {
     printf(format);
@@ -60,37 +61,61 @@ void onClick_menu_item_save(GtkWidget* widget, gpointer data) {
 }
 
 void onClick_menu_item_mirror(GtkWidget* widget, gpointer data) {
-    append_to_log("Mirror menu item clicked.\n");
+    if (loadedPGMImage != NULL) {
+        append_to_log("Mirror effect applied.\n");
+        applyMirrorEffect(loadedPGMImage);
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            loadedPGMImage->data,
+            CAIRO_FORMAT_A8,
+            loadedPGMImage->width,
+            loadedPGMImage->height,
+            loadedPGMImage->width
+        );
+    }
+    else if (loadedPPMImage != NULL) {
+        append_to_log("Mirror effect applied.\n");
+        applyMirrorEffect(loadedPGMImage);
+        image_surface = cairo_image_surface_create_for_data(
+            loadedPPMImage->data,
+            CAIRO_FORMAT_A8,
+            loadedPPMImage->width,
+            loadedPPMImage->height,
+            loadedPPMImage->width
+        );
+    }
+    else {
+        append_to_log("Firstly load image.\n");
+    }
 }
 
 void onClick_menu_item_negative(GtkWidget* widget, gpointer data) {
-
-    /*if (loadedPGMImage != NULL) {
+    if (loadedPGMImage != NULL) {
         append_to_log("Negative effect applied.\n");
         applyNegativeEffect(loadedPGMImage);
-        /*image_surface = cairo_image_surface_create_for_data(
-                            loadedPGMImage->data,
-                            CAIRO_FORMAT_A8,
-                            loadedPGMImage->width,
-                            loadedPGMImage->height,
-                            loadedPGMImage->width
-             );
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            loadedPGMImage->data,
+            CAIRO_FORMAT_A8,
+            loadedPGMImage->width,
+            loadedPGMImage->height,
+            loadedPGMImage->width
+        );
     }
     else if (loadedPPMImage != NULL) {
         append_to_log("Negative effect applied.\n");
         applyNegativeEffect(loadedPPMImage);
         image_surface = cairo_image_surface_create_for_data(
-                                    loadedPPMImage->data,
-                                    CAIRO_FORMAT_A8,
-                                    loadedPPMImage->width,
-                                    loadedPPMImage->height,
-                                    loadedPPMImage->width
-                     );
+            loadedPPMImage->data,
+            CAIRO_FORMAT_A8,
+            loadedPPMImage->width,
+            loadedPPMImage->height,
+            loadedPPMImage->width
+        );
     }
     else {
         append_to_log("Firstly load image.\n");
-    }*/
-
+    }
 }
 
 void onClick_menu_item_open(GtkWidget* widget, gpointer data) {
@@ -118,47 +143,45 @@ void onClick_menu_item_open(GtkWidget* widget, gpointer data) {
         if (extension != NULL) {
             if (strcmp(extension, PGM_FILE_EXT) == 0) {
                 if (loadPGMImage(filename) == 0) {
-                    printf("PGM Image loaded successfully.\n");
                     append_to_log("PGM Image loaded successfully.\n");
+                    size_t len = loadedPGMImage->width * loadedPGMImage->height;
+                    for(size_t i = 0; i < len; i++) {
+                        loadedPGMImage->data[i] = 255 - loadedPGMImage->data[i];
+                    }
                     image_surface = cairo_image_surface_create_for_data(
-                                  loadedPGMImage->data,
-                                  CAIRO_FORMAT_A8,
-                                  loadedPGMImage->width,
-                                  loadedPGMImage->height,
-                                  loadedPGMImage->width
-                   );
+                        loadedPGMImage->data,
+                        CAIRO_FORMAT_A8,
+                        loadedPGMImage->width,
+                        loadedPGMImage->height,
+                        loadedPGMImage->width
+                    );
                 }
                 else {
-                    printf("Failed to load the PGM image. Exiting.\n");
                     append_to_log("Failed to load the PGM image. Exiting.\n");
                     return;
                 }
             }
             else if (strcmp(extension, PPM_FILE_EXT) == 0) {
                 if (loadPPMImage(filename) == 0) {
-                    printf("PPM Image loaded successfully.\n");
                     append_to_log("PPM Image loaded successfully.\n");
                     image_surface = cairo_image_surface_create_for_data(
-                                    loadedPPMImage->data,
-                                    CAIRO_FORMAT_A8,
-                                    loadedPPMImage->width,
-                                    loadedPPMImage->height,
-                                    loadedPPMImage->width);
+                        loadedPPMImage->data,
+                        CAIRO_FORMAT_ARGB32,
+                        loadedPPMImage->width,
+                        loadedPPMImage->height,
+                        loadedPPMImage->width);
                 }
                 else {
-                    printf("Failed to load the PPM image. Exiting.\n");
                     append_to_log("Failed to load the PPM image. Exiting.\n");
                     return;
                 }
             }
             else {
-                printf("Unsupported file format. Exiting.\n");
                 append_to_log("Unsupported file format. Exiting.\n");
                 return;
             }
         }
         else {
-            printf("Invalid filename. Exiting.\n");
             append_to_log("Invalid filename. Exiting.\n");
             return;
         }
@@ -167,17 +190,17 @@ void onClick_menu_item_open(GtkWidget* widget, gpointer data) {
     gtk_widget_destroy(dialog);
 }
 
-void draw_image(GtkWidget* widget, cairo_t *cr) {
+void draw_image(GtkWidget* widget, cairo_t* cr) {
     if (image_surface != NULL) {
         gtk_widget_set_size_request(widget, cairo_image_surface_get_width(image_surface),
-                            cairo_image_surface_get_height(image_surface));
+                                    cairo_image_surface_get_height(image_surface));
         cairo_set_source_surface(cr, image_surface, 0, 0);
         cairo_paint(cr);
     }
 }
 
-gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-        draw_image(widget,cr);
+gboolean on_draw_event(GtkWidget* widget, cairo_t* cr, gpointer user_data) {
+    draw_image(widget, cr);
     return FALSE;
 }
 
@@ -195,7 +218,7 @@ void create_gui(int argc, char* argv[]) {
     GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    GtkWidget *drawing_area = gtk_drawing_area_new();
+     drawing_area = gtk_drawing_area_new();
 
 
     gtk_widget_set_size_request(drawing_area, 300, 150);
