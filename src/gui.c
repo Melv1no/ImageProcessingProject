@@ -60,64 +60,122 @@ void onClick_menu_item_save(GtkWidget* widget, gpointer data) {
     gtk_widget_destroy(dialog);
 }
 
-void onClick_menu_item_mirror(GtkWidget* widget, gpointer data) {
-    if (loadedPGMImage != NULL) {
-        append_to_log("Mirror effect applied.\n");
-        applyMirrorEffect(loadedPGMImage);
-        gtk_widget_queue_draw(drawing_area);
-        image_surface = cairo_image_surface_create_for_data(
-            loadedPGMImage->data,
-            CAIRO_FORMAT_A8,
-            loadedPGMImage->width,
-            loadedPGMImage->height,
-            loadedPGMImage->width
-        );
-    }
-    else if (loadedPPMImage != NULL) {
-        append_to_log("Mirror effect applied.\n");
-        applyMirrorEffect(loadedPGMImage);
-        image_surface = cairo_image_surface_create_for_data(
-            loadedPPMImage->data,
-            CAIRO_FORMAT_A8,
-            loadedPPMImage->width,
-            loadedPPMImage->height,
-            loadedPPMImage->width
-        );
-    }
-    else {
-        append_to_log("Firstly load image.\n");
-    }
+void onClick_menu_item_mirror(GtkWidget* widget, gpointer data)
+{
+        if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+            append_to_log("Mirror effect applied.\n");
+            applyMirrorEffect();
+            gtk_widget_queue_draw(drawing_area);
+            image_surface = cairo_image_surface_create_for_data(
+                (loadedPGMImage  != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+                CAIRO_FORMAT_A8,
+                (loadedPGMImage != NULL  ? loadedPGMImage->width : loadedPPMImage->width),
+                (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+                (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+            );
+        }else {
+            append_to_log("Firstly load image.\n");
+        }
 }
 
 void onClick_menu_item_negative(GtkWidget* widget, gpointer data) {
-    if (loadedPGMImage != NULL) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
         append_to_log("Negative effect applied.\n");
-        applyNegativeEffect(loadedPGMImage);
+        applyNegativeEffect();
         gtk_widget_queue_draw(drawing_area);
         image_surface = cairo_image_surface_create_for_data(
-            loadedPGMImage->data,
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
             CAIRO_FORMAT_A8,
-            loadedPGMImage->width,
-            loadedPGMImage->height,
-            loadedPGMImage->width
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
         );
-    }
-    else if (loadedPPMImage != NULL) {
-        append_to_log("Negative effect applied.\n");
-        applyNegativeEffect(loadedPPMImage);
-        image_surface = cairo_image_surface_create_for_data(
-            loadedPPMImage->data,
-            CAIRO_FORMAT_A8,
-            loadedPPMImage->width,
-            loadedPPMImage->height,
-            loadedPPMImage->width
-        );
-    }
-    else {
+    }else {
         append_to_log("Firstly load image.\n");
     }
 }
 
+void onClick_menu_item_blur(GtkWidget* widget, gpointer data) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+        append_to_log("Blur effect applied.\n");
+        applyBlurEffect(2);
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+            CAIRO_FORMAT_A8,
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+        );
+    }else {
+        append_to_log("Firstly load image.\n");
+    }
+}
+void onClick_menu_item_gaussian(GtkWidget* widget, gpointer data) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+        append_to_log("Blur effect applied.\n");
+        applyGaussianEffect();
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+            CAIRO_FORMAT_A8,
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+        );
+    }else {
+        append_to_log("Firstly load image.\n");
+    }
+}
+void onClick_menu_item_sobel(GtkWidget* widget, gpointer data) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+        append_to_log("Blur effect applied.\n");
+        applySobelEffect();
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+            CAIRO_FORMAT_A8,
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+        );
+    }else {
+        append_to_log("Firstly load image.\n");
+    }
+}
+void onClick_menu_item_pixelization(GtkWidget* widget, gpointer data) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+        append_to_log("Blur effect applied.\n");
+        applyPixelizationEffect();
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+            CAIRO_FORMAT_A8,
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+        );
+    }else {
+        append_to_log("Firstly load image.\n");
+    }
+}
+
+void onClick_menu_item_grayscale(GtkWidget* widget, gpointer data) {
+    if(loadedPGMImage != NULL || loadedPGMImage != NULL) {
+        append_to_log("Blur effect applied.\n");
+        applyGrayscaleEffect();
+        gtk_widget_queue_draw(drawing_area);
+        image_surface = cairo_image_surface_create_for_data(
+            (loadedPGMImage != NULL ? loadedPGMImage->data : loadedPPMImage->data),
+            CAIRO_FORMAT_A8,
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width),
+            (loadedPGMImage != NULL ? loadedPGMImage->height : loadedPPMImage->height),
+            (loadedPGMImage != NULL ? loadedPGMImage->width : loadedPPMImage->width)
+        );
+    }else {
+        append_to_log("Firstly load image.\n");
+    }
+}
 void onClick_menu_item_open(GtkWidget* widget, gpointer data) {
     GtkWidget* dialog;
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
@@ -253,12 +311,22 @@ void create_gui(int argc, char* argv[]) {
     GtkWidget* menu_item_effect = gtk_menu_item_new_with_label("Effects");
     GtkWidget* menu_item_mirror = gtk_menu_item_new_with_label("Mirror");
     GtkWidget* menu_item_negative = gtk_menu_item_new_with_label("Negative");
+    GtkWidget* menu_item_blur = gtk_menu_item_new_with_label("Blur");
+    GtkWidget* menu_item_gaussian = gtk_menu_item_new_with_label("Gaussian");
+    GtkWidget* menu_item_sobel = gtk_menu_item_new_with_label("Sobel");
+    GtkWidget* menu_item_pixelization = gtk_menu_item_new_with_label("Pixelization");
+    GtkWidget* menu_item_grayscale = gtk_menu_item_new_with_label("Grayscale");
 
     g_signal_connect(menu_item_open, "activate", G_CALLBACK(onClick_menu_item_open), window);
     g_signal_connect(menu_item_save, "activate", G_CALLBACK(onClick_menu_item_save), window);
     g_signal_connect(menu_item_exit, "activate", G_CALLBACK(onClick_menu_item_exit), window);
     g_signal_connect(menu_item_mirror, "activate", G_CALLBACK(onClick_menu_item_mirror), window);
     g_signal_connect(menu_item_negative, "activate", G_CALLBACK(onClick_menu_item_negative), window);
+    g_signal_connect(menu_item_blur, "activate", G_CALLBACK(onClick_menu_item_blur), window);
+    g_signal_connect(menu_item_gaussian, "activate", G_CALLBACK(onClick_menu_item_gaussian), window);
+    g_signal_connect(menu_item_sobel, "activate", G_CALLBACK(onClick_menu_item_sobel), window);
+    g_signal_connect(menu_item_pixelization, "activate", G_CALLBACK(onClick_menu_item_pixelization), window);
+    g_signal_connect(menu_item_grayscale, "activate", G_CALLBACK(onClick_menu_item_grayscale), window);
     g_signal_connect(drawing_area, "draw", G_CALLBACK(on_draw_event), NULL);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
@@ -267,6 +335,10 @@ void create_gui(int argc, char* argv[]) {
     gtk_menu_shell_append(GTK_MENU_SHELL(menu_file), menu_item_exit);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_mirror);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_negative);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_blur);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_gaussian);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_sobel);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu_effect), menu_item_pixelization);
 
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item_file), menu_file);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menu_item_file);
