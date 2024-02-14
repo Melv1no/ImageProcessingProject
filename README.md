@@ -1,7 +1,7 @@
 # Build
 
 Installer les librairies gtk avec MSYS64. Changer le compilateur par défault sur l'IDE.
-a default utilisé la dernière release et installer les GTK RUNTIME ENVIRONNEMENT.
+a default utilisé la dernière release et installer les GTK RUNTIME ENVIRONNEMENT https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases/tag/2022-01-04.
 
 
 
