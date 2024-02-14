@@ -1,3 +1,8 @@
+    --cli pour le lancer en cli
+    --gui pour le lancer en gui (par défault)
+    --debug pour le lancer en mode testes
+
+
 # Build
 
 Installer les librairies gtk avec MSYS64. Changer le compilateur par défault sur l'IDE.
